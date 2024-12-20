@@ -81,7 +81,10 @@ const Signup = () => {
       setLoading(false);
     }
   };
-
+const backtowebsite=()=>{
+  const redirectPath = Cookies.get('currentpath');
+  router.push(redirectPath)
+}
   const openModal = (e) => {
     e.preventDefault()
     setIsModalOpen(true);
@@ -175,7 +178,7 @@ const Signup = () => {
       {/* Right Section */}
       <div className="right-section">
         <div className="form-card">
-          <button className="back-button" onClick={() => router.push('/')}>
+          <button className="back-button" onClick={() => backtowebsite()}>
             Back to website →
           </button>
           <h1 className="form-header">Create an account</h1>

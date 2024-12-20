@@ -220,6 +220,51 @@ const handleshopnow=()=>{
           </li>
           <li className="group">
             <Link
+              href="/frontend/Products/tshirts"
+              className="flex items-center px-6 py-3 text-gray-700 hover:text-blue-500 hover:bg-gray-100 rounded transition-all"
+            >
+              <i className="fas fa-tshirt mr-4 text-gray-500 group-hover:text-blue-500 mr-2"></i>
+              T Shirts
+            </Link>
+          </li>
+          <li className="group">
+            <Link
+              href="/frontend/Products/shorts"
+              className="flex items-center px-6 py-3 text-gray-700 hover:text-blue-500 hover:bg-gray-100 rounded transition-all"
+            >
+              <i className="fas fa-briefcase mr-4 text-gray-500 group-hover:text-blue-500 mr-2"></i>
+              Shorts
+            </Link>
+          </li>
+          <li className="group">
+            <Link
+              href="/frontend/Products/innerwears"
+              className="flex items-center px-6 py-3 text-gray-700 hover:text-blue-500 hover:bg-gray-100 rounded transition-all"
+            >
+              <i className="fas fa-briefcase mr-4 text-gray-500 group-hover:text-blue-500 mr-2"></i>
+              Inner wears
+            </Link>
+          </li>
+          <li className="group">
+            <Link
+              href="/frontend/Products/accessories"
+              className="flex items-center px-6 py-3 text-gray-700 hover:text-blue-500 hover:bg-gray-100 rounded transition-all"
+            >
+              <i className="fas fa-shoe-prints mr-4 text-gray-500 group-hover:text-blue-500 mr-2"></i>
+              Shoes
+            </Link>
+          </li>
+          <li className="group">
+            <Link
+              href="/frontend/Products/accessories"
+              className="flex items-center px-6 py-3 text-gray-700 hover:text-blue-500 hover:bg-gray-100 rounded transition-all"
+            >
+              <i className="fas fa-briefcase mr-4 text-gray-500 group-hover:text-blue-500 mr-2"></i>
+              Accessories
+            </Link>
+          </li>
+          <li className="group">
+            <Link
               href="/frontend/cart"
               className="flex items-center px-6 py-3 text-gray-700 hover:text-blue-500 hover:bg-gray-100 rounded transition-all"
             >
@@ -248,11 +293,11 @@ const handleshopnow=()=>{
         </ul>
 
         {/* Footer Section */}
-        <div className="absolute bottom-0 w-full px-6 py-4 border-t border-gray-200">
+        {/* <div className="absolute bottom-0 w-full px-6 py-4 border-t border-gray-200">
           <p className="text-sm text-gray-500">
             © 2024 <span className="font-semibold text-gray-800">SOKKAI</span>. All rights reserved.
           </p>
-        </div>
+        </div> */}
       </div>
    
       <header className="flex items-center justify-between px-4 py-4 shadow-md bg-white">

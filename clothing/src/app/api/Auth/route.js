@@ -32,6 +32,7 @@ export async function POST(request) {
 
     let user = await User.findOne({ email });
     if (user) {
+      
       return new Response(
         JSON.stringify({ error: "Email already exists" }),
         { status: 400 }

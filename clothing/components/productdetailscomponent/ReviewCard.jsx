@@ -52,7 +52,7 @@ const ReviewCard = ({ review, index }) => {
         <ThumbsUp className="w-5 h-5 sm:w-6 sm:h-6" />
       </button>
       <button className="text-gray-500 hover:text-blue-500 transition-colors flex-shrink-0">
-        <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6" />
+        <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 sm:hidden" />
       </button>
     </div>
   </div>
@@ -92,9 +92,9 @@ const ReviewCard = ({ review, index }) => {
   {/* Verified Purchase Badge */}
   {review.purchaseVerified && (
     <div className="mt-2">
-      <span className="bg-green-100 text-green-800 text-xs px-2.5 py-0.5 rounded-full">
+      {/* <span className="bg-green-100 text-green-800 text-xs px-2.5 py-0.5 rounded-full">
         Verified Purchase
-      </span>
+      </span> */}
     </div>
   )}
 </motion.div>
