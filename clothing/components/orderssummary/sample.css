@@ -1,0 +1,105 @@
+/* Price Details Section */
+.price-details {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    
+  }
+  
+  .price-row,
+  .savings-row,
+  .total-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .original-price {
+    text-decoration: line-through;
+    color: grey;
+  }
+  
+  .free {
+    color: green;
+  }
+  
+  .platform-fee {
+    display: flex;
+    align-items: center;
+  }
+  
+  .info-icon {
+    margin-left: 5px;
+  }
+  
+  .total-row {
+    font-weight: bold;
+    font-size: 18px;
+  }
+  
+  .savings-row {
+    color: green;
+    font-size: 14px;
+  }
+  
+  /* Coupon Discount Section */
+  .coupon-discount {
+    display: flex;
+    justify-content: space-between;
+    background-color: #ffeb3b;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  
+  .coupon-title {
+    color: #ff9800;
+  }
+  
+  /* Modal-like Coupon Section */
+  .coupon-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .coupon-modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+  }
+  
+  .coupon-modal-content h3 {
+    color: #4caf50;
+  }
+  
+  .coupon-modal-content button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+  }
+  
+  .coupon-modal-content button:hover {
+    background-color: #d32f2f;
+  }
+  @media (max-width: 768px) {
+    .price-details {
+      margin-left: 1px;
+      margin-right: 50px !important; /* Force the margin to apply */
+    }
+  }
+  

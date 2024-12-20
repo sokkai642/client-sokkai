@@ -1,0 +1,135 @@
+/* landingpage.css or any global CSS file */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+.landing-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.top-half {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  height: 60%;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bottom-half {
+  height: 40%;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  box-sizing: border-box;
+  position: relative;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+}
+/* Apply Poppins font to the whole heading */
+.heading {
+  font-family: 'Poppins', sans-serif;
+  font-size: 3rem;
+  font-weight: bold;
+  letter-spacing: 0.1rem; /* Adjust space between letters */
+  color: white;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  gap: 0.2rem;
+}
+.letter-s {
+  color: #e1e2e3;
+}
+
+.letter-o {
+  color: #e1e2e3;
+}
+
+.letter-k {
+  color: #0e51e1;
+}
+
+.letter-k:nth-child(4) {
+  color: #e1e2e3;
+}
+
+.letter-a {
+  color: #e1e2e3;
+}
+
+.letter-i {
+  color: #e1e2e3;
+}
+
+.subheading {
+  font-size: 1.25rem;
+  color: #d1d5db;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.button-container {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.btn {
+  padding: 1rem 3rem;
+  border: 2px solid white;
+  color: white;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.125rem;
+  border-radius: 4px;
+  width: auto;
+  position: relative;
+}
+
+.login-btn {
+  border-color: #3b82f6;
+  color: #3b82f6;
+}
+
+.signin-btn {
+  border-color: #10b981;
+  color: #10b981;
+}
+
+.login-btn:hover,
+.signin-btn:hover {
+  background-color: #3b82f6;
+  color: white;
+  transform: scale(1.1);
+}
+
+.signin-btn:hover {
+  background-color: #10b981;
+  transform: scale(1.1);
+}
+
+.login-btn:focus,
+.signin-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+.signin-btn:focus {
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.5);
+}
+
+body {
+  transition: background-color 0.3s ease;
+}

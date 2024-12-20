@@ -1,0 +1,261 @@
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; 
+}
+
+body, html {
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+  background-color: #ccccd3; /* Dark background for the body */
+}
+
+.login-container {
+  display: flex;
+  height: 100vh;
+  flex-direction: row;
+}
+
+.left-section {
+  position: relative;
+  width: 50%;
+  overflow: hidden;
+  background-color: black;
+}
+
+.overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+}
+
+.overlay h2 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.overlay p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.right-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #2e2e3e;
+  padding: 60px;
+}
+
+.form-card {
+  width: 100%;
+  max-width: 480px;
+  padding: 40px;
+  background-color: #1e1e2e;
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.back-button {
+  align-self: flex-start;
+  color: #f8f9fa;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.form-header {
+  font-size: 32px;
+  font-weight: bold;
+  color: #f8f9fa;
+  margin-bottom: 10px;
+}
+
+.form-subheader {
+  font-size: 16px;
+  color: #b0b0b0;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  border: 1px solid #495057;
+  border-radius: 8px;
+  background-color: #343a40;
+  color: #f8f9fa;
+}
+
+input::placeholder {
+  color: #b0b0b0;
+}
+
+input:focus {
+  border-color: #6c757d;
+  outline: none;
+}
+
+.password-group {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 16px;
+  cursor: pointer;
+  color: #b0b0b0;
+}
+
+.login-button {
+  width: 100%;
+  padding: 14px;
+  background-color: #6f42c1;
+  color: #f8f9fa;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.login-button:hover {
+  background-color: #5936b2;
+}
+
+.divider {
+  text-align: center;
+  margin: 20px 0;
+  color: #b0b0b0;
+}
+
+.social-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.google-button,
+.apple-button {
+  flex: 1;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #495057;
+  background-color: #2e2e3e;
+  color: #f8f9fa;
+  cursor: pointer;
+}
+
+.google-button:hover,
+.apple-button:hover {
+  background-color: #343a40;
+}
+
+.forgot-password {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.forgot-password a {
+  color: #6f42c1;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .login-container {
+      flex-direction: column;
+  }
+
+  .left-section {
+      display: none; /* Hide left section on small screens */
+  }
+
+  .right-section {
+      width: 100%; /* Full width for the right section */
+      padding: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-card {
+      padding: 20px;
+  }
+
+  .form-header {
+      font-size: 24px;
+  }
+
+  .login-button {
+      font-size: 16px;
+      padding: 12px;
+  }
+}
+
+.otpless-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+
+.otpless-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: none;
+  border: none;
+  width: 400px;
+  padding: 0;
+  z-index: 1001;
+}
+
+
+.otpless-container {
+  margin: 0;
+  padding: 0;
+}
+
+
+.close-modal-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 1002;
+}

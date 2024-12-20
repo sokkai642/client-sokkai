@@ -1,0 +1,110 @@
+  const products = [
+    {
+      id: 1,
+      name: "Stylish Jacket",
+      price: "$49.99",
+      totalPurchases: 120,
+      available: true,
+      image:
+        "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQcsy4CVALNrsD0vbh8win4dxB0BtZqZzNF2OrPBOfW51AtSL7kThhHiSW5GnGDGPmapvgEqQ85kZK058qYpv6tzR_6j6trfGDsXeNBUt60rerQHmKYb4hCxw",
+    },
+    {
+      id: 2,
+      name: "Classic T-Shirt",
+      price: "$19.99",
+      totalPurchases: 200,
+      available: false,
+      image:
+        "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSnQfxR8Pgyf5PCmeQplhwiUwEGG1Pf9HNgFEjliVokAZhfAkuNNIO1zBKt2hJceKS8tqIWxGlbZJFkFo_K2xYmKtGtaKFbpYJ2Q6lnDzE9",
+    },
+    {
+      id: 3,
+      name: "Stylish Jacket",
+      price: "$49.99",
+      totalPurchases: 120,
+      available: true,
+      image:
+        "https://cdn.rajwadi.com/image/cache/data/peach-color-indowestern-in-silk-fabric-47113-297x408.jpg",
+    },
+    {
+      id: 4,
+      name: "Classic T-Shirt",
+      price: "$19.99",
+      totalPurchases: 200,
+      available: false,
+      image:
+        "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSnQfxR8Pgyf5PCmeQplhwiUwEGG1Pf9HNgFEjliVokAZhfAkuNNIO1zBKt2hJceKS8tqIWxGlbZJFkFo_K2xYmKtGtaKFbpYJ2Q6lnDzE9",
+    },
+    {
+      id: 5,
+      name: "Stylish Jacket",
+      price: "$49.99",
+      totalPurchases: 120,
+      available: true,
+      image:
+        "https://successmenswear.com/cdn/shop/files/Z1_550x.jpg?v=1714477615",
+    },
+    {
+      id: 6,
+      name: "Classic T-Shirt",
+      price: "$19.99",
+      totalPurchases: 200,
+      available: false,
+      image:
+        "https://cdn.rajwadi.com/image/cache/data/peach-color-indowestern-in-silk-fabric-47113-297x408.jpg",
+    },
+    {
+      id: 7,
+      name: "Stylish Jacket",
+      price: "$49.99",
+      totalPurchases: 120,
+      available: true,
+      image:
+        "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQcsy4CVALNrsD0vbh8win4dxB0BtZqZzNF2OrPBOfW51AtSL7kThhHiSW5GnGDGPmapvgEqQ85kZK058qYpv6tzR_6j6trfGDsXeNBUt60rerQHmKYb4hCxw",
+    },
+    {
+      id: 8,
+      name: "Classic T-Shirt",
+      price: "$19.99",
+      totalPurchases: 200,
+      available: false,
+      image:
+        "https://successmenswear.com/cdn/shop/files/FW_550x.jpg?v=1702723086",
+    },
+    {
+      id: 9,
+      name: "Stylish Jacket",
+      price: "$49.99",
+      totalPurchases: 120,
+      available: true,
+      image:
+        "https://successmenswear.com/cdn/shop/files/Z1_550x.jpg?v=1714477615",
+    },
+    {
+      id: 10,
+      name: "Classic T-Shirt",
+      price: "$19.99",
+      totalPurchases: 200,
+      available: false,
+      image:
+        "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSnQfxR8Pgyf5PCmeQplhwiUwEGG1Pf9HNgFEjliVokAZhfAkuNNIO1zBKt2hJceKS8tqIWxGlbZJFkFo_K2xYmKtGtaKFbpYJ2Q6lnDzE9",
+    },
+    {
+      id: 11,
+      name: "Stylish Jacket",
+      price: "$49.99",
+      totalPurchases: 120,
+      available: true,
+      image:
+        "https://successmenswear.com/cdn/shop/files/FW_550x.jpg?v=1702723086",
+    },
+    {
+      id: 12,
+      name: "Classic T-Shirt",
+      price: "$19.99",
+      totalPurchases: 200,
+      available: false,
+      image:
+        "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSnQfxR8Pgyf5PCmeQplhwiUwEGG1Pf9HNgFEjliVokAZhfAkuNNIO1zBKt2hJceKS8tqIWxGlbZJFkFo_K2xYmKtGtaKFbpYJ2Q6lnDzE9",
+    },
+  ];

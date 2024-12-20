@@ -1,0 +1,152 @@
+/* Main container */
+.container {
+  font-family: 'Arial', sans-serif;
+  margin: 0 auto;
+  max-width: 1200px;
+  background-color: #ffffff; /* White background for the entire page */
+  text-align: center;
+  min-height: 100vh;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ddd;
+}
+
+.header h1 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #000;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+}
+
+.search {
+  width: 300px;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 1rem;
+  margin-right: 1rem;
+}
+
+.icons i {
+  font-size: 1.4rem;
+  margin: 0 0.7rem;
+  color: #000;
+  cursor: pointer;
+}
+
+/* Profile Section */
+.profile {
+  padding: 2rem;
+}
+
+.profileDetails {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.profileImage {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.profileText {
+  flex: 1;
+  text-align: left;
+  margin-left: 1rem;
+}
+
+.profileText h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000;
+}
+
+.profileText p {
+  font-size: 1rem;
+  color: #555;
+  margin: 0.2rem 0;
+}
+
+.editProfile {
+  text-align: right;
+}
+
+.editButton {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.actions button {
+  padding: 0.8rem 1.2rem;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.actions button:hover {
+  background-color: #ececec;
+}
+
+/* Footer */
+.footer {
+  background-color: #000;
+  color: #fff;
+  padding: 2rem 0;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.footer p {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.footer .socialIcons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.footer .socialIcons a {
+  font-size: 1.2rem;
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer .socialIcons a:hover {
+  color: #ddd;
+}

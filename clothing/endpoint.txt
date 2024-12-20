@@ -1,0 +1,6 @@
+
+Folder Structure
+Wishlist CRUD: /api/user/wishlist/
+Cart CRUD: /api/user/cart/
+History CRUD: /api/user/history/
+Coupon CRUD: /api/user/coupon/
