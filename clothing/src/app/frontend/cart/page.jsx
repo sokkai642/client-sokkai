@@ -376,126 +376,134 @@ const [isLoading, setIsLoading] = useState(false); // Loading state
     <div className="min-h-screen bg-white text-black">
       {/* Cart Heading */}
       <div className="flex flex-col md:flex-row justify-between p-4 pt-4">
-  <div className="flex-1 overflow-y-auto max-h-[calc(100vh-160px)] space-y-4 pr-4">
+      <div className="flex-1 overflow-y-auto max-h-[calc(100vh-160px)] space-y-4 pr-4">
   {!userId ? (
-            <div className="flex justify-center items-center w-full h-full">
-              <div className="text-center p-4 bg-gray-100 rounded-lg shadow-lg">
-                <h2 className="text-xl sm:text-2xl font-bold text-gray-700">
-                  Please log in or sign up to access your cart
-                </h2>
-                <div className="mt-4 space-x-4">
-                  <button
-                    className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-                    onClick={() =>handlenotsignedin("login")}
-                  >
-                    Login
-                  </button>
-                  <button
-                    className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
-                    onClick={() =>handlenotsignedin("signup") }
-                  >
-                    Sign Up
-                  </button>
-                </div>
+    <div className="flex justify-center items-center w-full h-full">
+      <div className="text-center p-4 bg-gray-100 rounded-lg shadow-lg">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-700">
+          Please log in or sign up to access your cart
+        </h2>
+        <div className="mt-4 space-x-4">
+          <button
+            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+            onClick={() => handlenotsignedin("login")}
+          >
+            Login
+          </button>
+          <button
+            className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
+            onClick={() => handlenotsignedin("signup")}
+          >
+            Sign Up
+          </button>
+        </div>
+      </div>
+    </div>
+  ) : (
+    <div>
+      {loading ? (
+        <Loader />
+      ) : cartdata.length === 0 ? (
+        <div className="text-center py-20">
+          <h2 className="text-3xl font-bold text-gray-800">Your cart is empty!</h2>
+          <p className="text-lg text-gray-600 mt-4">Browse products and add them to your cart.</p>
+          <button
+            className="bg-blue-600 text-white px-6 py-3 rounded-md mt-6 hover:bg-blue-700"
+            onClick={() => router.push('/frontend/Products/all')}
+          >
+            Shop Now
+          </button>
+        </div>
+      ) : (
+        cartdata.map((item) => (
+          <div
+            key={item._id}
+            className="flex items-center border rounded-md p-4 bg-gray-50 sm:h-28 md:h-32 lg:h-40 overflow-hidden relative shadow-lg hover:shadow-2xl transition-all duration-300 mb-4"
+          >
+            {item.stock && item.stock > 0 ? (
+              <input
+                type="checkbox"
+                className="custom-checkbox text-blue-500 absolute top-2 right-2"
+                checked={selectedItems.includes(item._id)}
+                onChange={() => handleCheckboxChange(item._id, item.price)}
+              />
+            ) : (
+              <div className="absolute top-2 right-2 text-red-600 font-bold text-xs sm:text-sm">
+                No Stock
+              </div>
+            )}
+            <img
+              src={item.images[0].url}
+              alt={`product-${item.name}`}
+              className="w-16 sm:w-20 h-16 sm:h-20 object-cover rounded-md shadow-md"
+            />
+            <div className="ml-4 flex-1">
+              <h2
+                className="font-bold text-sm sm:text-base md:text-lg lg:text-xl text-gray-800 hover:text-blue-500"
+                onClick={() => showdetails(item._id)}
+              >
+                {item.name}
+              </h2>
+              <p className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-600 mt-1">
+                SIZE: {item.sizes}
+              </p>
+              <p className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-600">
+                COUNT: {item.quantity}
+              </p>
+              <div className="flex justify-between items-center mt-2">
+                <p className="text-sm sm:text-lg md:text-xl lg:text-2xl font-semibold text-gray-800">
+                  {item.price * item.quantity} RS
+                </p>
+                <p className="text-blue-800 font-bold text-xs sm:text-sm md:text-base lg:text-lg line-through text-gray-500">
+                  {item.originalprice * item.quantity} RS
+                </p>
+              </div>
+              <p className="text-green-800 font-bold text-xs sm:text-sm md:text-base lg:text-lg mt-1">
+                SAVED ₹ {item.originalprice - item.price}
+              </p>
+            </div>
+            {/* Mobile Specific Layout */}
+            <div className="flex flex-col sm:flex-row sm:space-x-4 items-center space-y-4 sm:space-y-0 mt-4 sm:mt-0 ml-4">
+              {/* Quantity Buttons */}
+              <div className="flex items-center space-x-4">
+                <button
+                  onClick={() => handleQuantityChange(item._id, "decrement")}
+                  className="text-gray-700 hover:text-blue-500 text-xl transform hover:scale-110 transition-all duration-300"
+                >
+                  <i className="fas fa-minus-circle"></i>
+                </button>
+                <span className="text-lg font-semibold text-gray-800">{item.quantity}</span>
+                <button
+                  onClick={() => handleQuantityChange(item._id, "increment")}
+                  className="text-gray-700 hover:text-blue-500 text-xl transform hover:scale-110 transition-all duration-300"
+                  disabled={item.stock < item.quantity}
+                >
+                  <i className="fas fa-plus-circle"></i>
+                </button>
+              </div>
+              {/* Action Icons */}
+              <div className="flex items-center space-x-4">
+                <button
+                  className="text-gray-700 hover:text-blue-500 text-xl sm:text-2xl transform hover:scale-110 transition-all duration-300"
+                  onClick={() => handleAction("WISHLIST", item._id)}
+                >
+                  <i className="fas fa-heart"></i>
+                </button>
+                <button
+                  className="text-gray-700 hover:text-red-500 text-xl sm:text-2xl transform hover:scale-110 transition-all duration-300"
+                  onClick={() => handleAction("DELETE", item._id)}
+                >
+                  <i className="fas fa-trash"></i>
+                </button>
               </div>
             </div>
-          ) : (
-            <div>
-    {loading ? (
-      <Loader />
-    ) : (
-      cartdata.map((item, index) => (
-        <div
-          key={item._id}
-          className="flex items-center border rounded-md p-4 bg-gray-50 sm:h-28 md:h-32 lg:h-40 overflow-hidden relative shadow-lg hover:shadow-2xl transition-all duration-300 mb-4"  // Add `mb-4` for margin-bottom
-        >
-          {item.stock && item.stock > 0 ? (
-            <input
-              type="checkbox"
-              className="custom-checkbox text-blue-500 absolute top-2 right-2"
-              checked={selectedItems.includes(item._id)}
-              onChange={() => handleCheckboxChange(item._id, item.price)}
-            />
-          ) : (
-            <div className="absolute top-2 right-2 text-red-600 font-bold text-xs sm:text-sm">
-              No Stock
-            </div>
-          )}
-          <img
-            src={item.images[0].url}
-            alt={`product-${item.name}`}
-            className="w-16 sm:w-20 h-16 sm:h-20 object-cover rounded-md shadow-md"
-          />
-          <div className="ml-4 flex-1">
-            <h2
-              className="font-bold text-sm sm:text-base md:text-lg lg:text-xl text-gray-800 hover:text-blue-500"
-              onClick={() => showdetails(item._id)}
-            >
-              {item.name}
-            </h2>
-      
-            <p className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-600 mt-1">
-              SIZE: {item.sizes}
-            </p>
-            <p className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-600">
-              COUNT: {item.quantity}
-            </p>
-            <div className="flex justify-between items-center mt-2">
-              <p className="text-sm sm:text-lg md:text-xl lg:text-2xl font-semibold text-gray-800">
-                {item.price * item.quantity} RS
-              </p>
-              <p className="text-blue-800 font-bold text-xs sm:text-sm md:text-base lg:text-lg line-through text-gray-500">
-                {item.originalprice * item.quantity} RS
-              </p>
-            </div>
-            <p className="text-green-800 font-bold text-xs sm:text-sm md:text-base lg:text-lg mt-1">
-              SAVED  ₹ {item.originalprice - item.price}
-            </p>
           </div>
-      
-          {/* Mobile Specific Layout */}
-          <div className="flex flex-col sm:flex-row sm:space-x-4 items-center space-y-4 sm:space-y-0 mt-4 sm:mt-0 ml-4">
-            {/* Quantity Buttons */}
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={() => handleQuantityChange(item._id, "decrement")}
-                className="text-gray-700 hover:text-blue-500 text-xl transform hover:scale-110 transition-all duration-300"
-              >
-                <i className="fas fa-minus-circle"></i>
-              </button>
-              <span className="text-lg font-semibold text-gray-800">{item.quantity}</span>
-              <button
-                onClick={() => handleQuantityChange(item._id, "increment")}
-                className="text-gray-700 hover:text-blue-500 text-xl transform hover:scale-110 transition-all duration-300"
-                disabled={item.stock < item.quantity}
-              >
-                <i className="fas fa-plus-circle"></i>
-              </button>
-            </div>
-      
-            {/* Action Icons */}
-            <div className="flex items-center space-x-4">
-              <button
-                className="text-gray-700 hover:text-blue-500 text-xl sm:text-2xl transform hover:scale-110 transition-all duration-300"
-                onClick={() => handleAction("WISHLIST", item._id)}
-              >
-                <i className="fas fa-heart"></i>
-              </button>
-              <button
-                className="text-gray-700 hover:text-red-500 text-xl sm:text-2xl transform hover:scale-110 transition-all duration-300"
-                onClick={() => handleAction("DELETE", item._id)}
-              >
-                <i className="fas fa-trash"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      ))
-      
-    )}
-  </div>
-          )}
-          </div>
+        ))
+      )}
+    </div>
+  )}
+</div>
+
   {/* Price Section */}
   <div className="mt-6 md:mt-0 md:ml-8 md:w-1/3 space-y-6">
     {/* Coupon Section */}
@@ -607,6 +615,7 @@ const [isLoading, setIsLoading] = useState(false); // Loading state
           PURCHASE
         </button>
       </div>
+      
       <ToastContainer />
 
     </div>

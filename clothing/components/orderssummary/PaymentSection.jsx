@@ -1,3 +1,4 @@
+import { useEffect } from "react";  // For loading the script
 import { useState } from "react";
 import PaymentMethod from "./PaymentMethod";
 import axios from "axios";
@@ -19,59 +20,144 @@ function PaymentSection({
   const [isLoading, setIsLoading] = useState(false); // Loading state
   const couponDiscount = pricedetails?.couponDiscount || 0;
 
+  useEffect(() => {
+    // Dynamically load Razorpay script on client-side
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    // Cleanup the script after component unmount
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
   const handlePayment = async () => {
-    if (paymentMethod) {
-      setIsLoading(true); // Start loader
-      try {
-        const products = orderData.map((product) => ({
-          productId: product._id,
-          quantity: product.quantity,
-          totalPrice: product.price * product.quantity,
-        }));
+    if (!paymentMethod) return;
 
-        const purchaseHistory = {
-          userId,
-          products,
-          totalAmount: totalAmount,
-          timestamp: new Date(),
-          addressId: addressId,
-          couponDiscount,
-        };
+    setIsLoading(true); // Start loader
+    try {
+      const products = orderData.map((product) => ({
+        productId: product._id,
+        quantity: product.quantity,
+        totalPrice: product.price * product.quantity,
+      }));
 
+      const purchaseHistory = {
+        userId,
+        products,
+        totalAmount,
+        timestamp: new Date(),
+        addressId,
+        couponDiscount,
+      };
+
+      if (paymentMethod === "cod") {
+        // Cash on Delivery flow
         const response = await axios.post("/api/purchasehistory", purchaseHistory);
-        onPaymentComplete();
         if (response.status === 200) {
-          if (couponDiscount > 0) {
-            await axios.put("/api/coupun/validate", {
-              userId,
-              couponId: pricedetails.couponid,
-            });
-          }
-
-          try {
-            const WhatsappResponse = await axios.post("/api/communication/invoice", {
-              products: orderData,
-              address: AddressString,
-            });
-            console.log("WhatsApp response:", WhatsappResponse.data);
-            localStorage.removeItem("orderData");
-          } catch (error) {
-            console.error("Error sending WhatsApp message:", error);
-          }
-
-        
-          console.log("Purchase history saved successfully!");
-        } else if (response.status == 400) {
+          toast.success("Order placed successfully!");
+          onPaymentComplete();
+          handlePostPaymentFlow();
+        } else if (response.status === 400) {
           toast.warning("Not enough stock");
-        } else {
-          console.error("Failed to save purchase history");
         }
-      } catch (error) {
-        console.error("Error saving purchase history:", error);
-      } finally {
-        setIsLoading(false); // Stop loader
+      } else {
+        // Online Payment via Razorpay
+        const orderResponse = await axios.post("/api/razorpay", { amount: totalAmount });
+        if (orderResponse.status === 200) {
+          const { id: order_id, amount, currency } = orderResponse.data;
+          const options = {
+            key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // Razorpay Key ID
+            amount,
+            currency,
+            name: "Your Company Name",
+            description: "Transaction for your purchase",
+            order_id,
+            handler: async (response) => {
+              const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = response;
+
+              // Verify payment on the server
+              try {
+                const verifyResponse = await axios.post("/api/razorpay/paymentverification", {
+                  razorpay_payment_id,
+                  razorpay_order_id,
+                  razorpay_signature,
+                });
+             console.log(verifyResponse)
+                if (verifyResponse.data?.success) {
+                  // Save purchase history
+                  console.log("fvvv fv fv fv")
+                  const saveResponse = await axios.post("/api/purchasehistory", purchaseHistory);
+                  if (saveResponse.status === 200) {
+                    toast.success("Payment successful and order placed!");
+                    onPaymentComplete();
+                    handlePostPaymentFlow();
+                  } else {
+                    toast.error("Failed to save purchase history. Please contact support.");
+                  }
+                } else {
+                  toast.error(
+                    verifyResponse.data?.error ||
+                      "Payment verification failed. Please try again."
+                  );
+                }
+              } catch (error) {
+                console.error("Error verifying payment:", error);
+                toast.error("An error occurred during payment verification.");
+              }
+            },
+            prefill: {
+              name: "Customer Name",
+              email: "customer@example.com",
+              contact: "9999999999",
+            },
+            theme: {
+              color: "#3399cc",
+            },
+          };
+
+          // Ensure Razorpay is defined before opening the checkout
+          if (window.Razorpay) {
+            const rzp = new window.Razorpay(options);
+            rzp.open();
+          } else {
+            toast.error("Razorpay is not loaded properly. Please try again.");
+          }
+        } else {
+          toast.error("Failed to create Razorpay order. Please try again.");
+        }
       }
+    } catch (error) {
+      console.error("Error during payment:", error);
+      toast.error("An error occurred during payment. Please try again.");
+    } finally {
+      setIsLoading(false); // Stop loader
     }
+  };
+
+  const handlePostPaymentFlow = async () => {
+    // Handle additional post-payment actions like validating coupons, sending WhatsApp messages, etc.
+    if (couponDiscount > 0) {
+      await axios.put("/api/coupun/validate", {
+        userId,
+        couponId: pricedetails.couponid,
+      });
+    }
+
+    try {
+      const WhatsappResponse = await axios.post("/api/communication/invoice", {
+        products: orderData,
+        address: AddressString,
+      });
+      console.log("WhatsApp response:", WhatsappResponse.data);
+      localStorage.removeItem("orderData");
+    } catch (error) {
+      console.error("Error sending WhatsApp message:", error);
+    }
+
+    toast.success("Purchase successful!");
   };
 
   const paymentMethods = [
@@ -90,7 +176,7 @@ function PaymentSection({
             {...method}
             selected={paymentMethod === method.value}
             onChange={setPaymentMethod}
-            disabled={method.value !== "cod"}
+            disabled={isLoading}
           />
         ))}
       </div>
