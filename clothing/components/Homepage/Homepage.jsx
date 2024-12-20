@@ -31,6 +31,44 @@ const HomePage = () => {
     const pageRef = useRef(null); 
   const [currentPair, setCurrentPair] = useState(0);
   const searchRef = useRef(null);
+  const categories = [
+    {
+      name: "Shirts",
+      image: "https://assets.digitalcontent.marksandspencer.app/image/upload/w_600,h_780,q_auto,f_auto,e_sharpen/SD_03_T11_2081_E0_X_EC_0",
+      navigate:"Shirts"
+    },
+    {
+      name: "T Shirts",
+      image: "https://assets.ajio.com/medias/sys_master/root/20230427/JPVF/64497d9b42f9e729d751f23a/-473Wx593H-466098941-multi-MODEL.jpg",
+      navigate:"tshirts"
+    },
+    {
+      name: "pants",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDP2xRD3HM82UrjRFKmF8B13cL4fanJR2a1s2BOGqs_g4iFPq55gl27Lwcq1UZoHqlu5Q&usqp=CAU",
+      navigate:"pants"
+    },
+    {
+      name: "Shorts",
+      image: "https://www.mumkins.in/cdn/shop/files/boys-shorts-bl08666-navyblue-1.jpg?v=1713421821&width=1080",
+    navigate:"shorts"
+    },
+    {
+      name: "Innerwears",
+      image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=800&auto=format&fit=crop",
+     navigate:"innerwears"
+    },
+    {
+      name: "Shoes",
+      image: "https://5.imimg.com/data5/SELLER/Default/2022/11/KE/VX/MV/116453489/white-casual-shoes-for-men.jpg",
+    navigate:"shoes"
+    },
+    {
+      name: "Accessories",
+      image: "https://static.fibre2fashion.com//articleresources/images/71/7074/SAdobeStock_247321133_Small.jpg",
+    navigate:"accessories"
+    }
+  ];
+  
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -346,98 +384,56 @@ const handleshopnow=()=>{
       </header>
 
       <main className={styles.main}>
-      <section className="relative bg-[#f8f9fa] py-8">
-  <div className="w-full px-4">
-    {/* Heading */}
-    
-
-    {/* Scroller Section */}
-    <div className="overflow-x-auto scrollbar-hide">
-      <div className="flex justify-center lg:justify-between space-x-8 lg:space-x-12 px-2 lg:px-6">
-        {/* Item 1 */}
-        <div className="flex flex-col items-center space-y-4">
-          <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 rounded-full bg-gray-200 overflow-hidden shadow-md">
-            <img
-              src="/path-to-your-image1.jpg"
-              alt="Shorts"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <span className="text-sm sm:text-base lg:text-lg font-medium text-gray-700">
-            Shorts
-          </span>
-        </div>
-
-        {/* Item 2 */}
-        <div className="flex flex-col items-center space-y-4">
-          <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 rounded-full bg-gray-200 overflow-hidden shadow-md">
-            <img
-              src="/path-to-your-image2.jpg"
-              alt="Trousers"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <span className="text-sm sm:text-base lg:text-lg font-medium text-gray-700">
-            Trousers
-          </span>
-        </div>
-
-        {/* Repeat for remaining items */}
-        <div className="flex flex-col items-center space-y-4">
-          <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 rounded-full bg-gray-200 overflow-hidden shadow-md">
-            <img
-              src="/path-to-your-image3.jpg"
-              alt="Shirts"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <span className="text-sm sm:text-base lg:text-lg font-medium text-gray-700">
-            Shirts
-          </span>
-        </div>
-
-        <div className="flex flex-col items-center space-y-4">
-          <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 rounded-full bg-gray-200 overflow-hidden shadow-md">
-            <img
-              src="/path-to-your-image4.jpg"
-              alt="Jackets"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <span className="text-sm sm:text-base lg:text-lg font-medium text-gray-700">
-            Jackets
-          </span>
-        </div>
-
-        <div className="flex flex-col items-center space-y-4">
-          <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 rounded-full bg-gray-200 overflow-hidden shadow-md">
-            <img
-              src="/path-to-your-image5.jpg"
-              alt="Jeans"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <span className="text-sm sm:text-base lg:text-lg font-medium text-gray-700">
-            Jeans
-          </span>
-        </div>
-
-        <div className="flex flex-col items-center space-y-4">
-          <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 rounded-full bg-gray-200 overflow-hidden shadow-md">
-            <img
-              src="/path-to-your-image6.jpg"
-              alt="Hats"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <span className="text-sm sm:text-base lg:text-lg font-medium text-gray-700">
-            Hats
-          </span>
+      <section className="relative bg-gradient-to-b from-[#f8f9fa] to-white py-12 overflow-hidden lg:hidden">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="relative">
+      <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#f8f9fa] to-transparent z-10" />
+      <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#f8f9fa] to-transparent z-10" />
+      
+      <div className="overflow-x-auto hide-scrollbar">
+        <div className="flex gap-4 sm:gap-6 lg:gap-8 px-4 py-4 min-w-max">
+          {categories.map((category, index) => (
+            <div 
+              key={index}
+              className="group flex flex-col items-center space-y-4 cursor-pointer"
+            >
+              <Link href={`/frontend/Products/${category.navigate}`} passHref>
+                <div className="relative w-28 h-28 sm:w-32 sm:h-32 lg:w-36 lg:h-36 rounded-full 
+                  bg-gradient-to-br from-white to-gray-100 
+                  overflow-hidden shadow-lg
+                  transition-all duration-300 ease-in-out
+                  group-hover:shadow-xl group-hover:scale-105"
+                >
+                  <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition-colors" />
+                  {/* Circular image inside the container */}
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full bg-gray-200 overflow-hidden shadow-md">
+                    <img
+                      src={category.image}
+                      alt={category.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+              </Link>
+              <span className="text-sm sm:text-base lg:text-lg font-medium text-gray-800
+                group-hover:text-gray-900 transition-colors">
+                {category.name}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
     </div>
   </div>
 </section>
+
+
+
+
+
+
+
+
 
 
       <section className="relative flex flex-col lg:flex-row justify-between items-center my-8 max-w-screen-lg mx-auto h-[100px] lg:h-[120px] text-center bg-[#f8f9fa] overflow-hidden">
