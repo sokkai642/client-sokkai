@@ -89,6 +89,13 @@ const HomePage = () => {
     fetchCategories();
   }, []);
   useEffect(() => {
+    // Ensure the current index is valid when gifts change
+    if (currentImageIndex >= gifts.length) {
+      setCurrentImageIndex(0);
+    }
+  }, [gifts]);
+
+  useEffect(() => {
     // Fetch data from the backend
     const fetchGifts = async () => {
       try {
@@ -149,10 +156,11 @@ const handleshopnow=()=>{
   };
 
   const nextImage1 = () => {
-    setCurrentImageIndex(
-      gifts.length > 0 ? (currentImageIndex + 1) % gifts.length : 0
+    setCurrentImageIndex((prevIndex) => 
+      gifts.length > 0 ? (prevIndex + 1) % gifts.length : 0
     );
   };
+  
 
   const prevImage = () => {
     setCurrentPair(
