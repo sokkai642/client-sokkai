@@ -17,8 +17,9 @@ console.log(amount)
       receipt: `receipt_${Date.now()}`,
     });
 console.log(order)
+
     return new Response(JSON.stringify(order), {
-      
+
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
