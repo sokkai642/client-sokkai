@@ -19,7 +19,7 @@ function PaymentSection({
   const [paymentMethod, setPaymentMethod] = useState("cod");
   const [isLoading, setIsLoading] = useState(false); // Loading state
   const couponDiscount = pricedetails?.couponDiscount || 0;
-
+  const [imageUrl, setImageUrl] = useState("");
   useEffect(() => {
     // Dynamically load Razorpay script on client-side
     const script = document.createElement("script");
@@ -42,24 +42,29 @@ function PaymentSection({
         productId: product._id,
         quantity: product.quantity,
         totalPrice: product.price * product.quantity,
+        size:product.selectedSize,
+        color:product.selectedcolor
       }));
 
-      const purchaseHistory = {
-        userId,
-        products,
-        totalAmount,
-        timestamp: new Date(),
-        addressId,
-        couponDiscount,
-      };
-
+     
       if (paymentMethod === "cod") {
         // Cash on Delivery flow
+       const fetchimageurl=await handlePostPaymentFlow();
+        const purchaseHistory = {
+          userId,
+          products,
+          totalAmount,
+          timestamp: new Date(),
+          addressId,
+          couponDiscount,
+          imageUrl:fetchimageurl
+        };
+  console.log("😍😍😍😍😍😍😍😍imageurl",imageUrl)
         const response = await axios.post("/api/purchasehistory", purchaseHistory);
         if (response.status === 200) {
           toast.success("Order placed successfully!");
           onPaymentComplete();
-          handlePostPaymentFlow();
+          // handlePostPaymentFlow();
         } else if (response.status === 400) {
           toast.warning("Not enough stock");
         }
@@ -89,7 +94,19 @@ function PaymentSection({
                 if (verifyResponse.data?.success) {
                   // Save purchase history
                   console.log("fvvv fv fv fv")
-                  const saveResponse = await axios.post("/api/purchasehistory", purchaseHistory);
+                  const fetchimageurl=await handlePostPaymentFlow();
+                  console.log("😒😒😒😒",fetchimageurl)
+                  const purchaseHistory = {
+                    userId,
+                    products,
+                    totalAmount,
+                    timestamp: new Date(),
+                    addressId,
+                    couponDiscount,
+                    imageUrl:fetchimageurl
+                  };
+            
+                  const saveResponse = await axios.post("/api/purchasehistory", purchaseHistory,imageUrl);
                   if (saveResponse.status === 200) {
                     toast.success("Payment successful and order placed!");
                     onPaymentComplete();
@@ -151,6 +168,13 @@ function PaymentSection({
         products: orderData,
         address: AddressString,
       });
+      if (WhatsappResponse.data && WhatsappResponse.data.invoiceimage) {
+        setImageUrl(WhatsappResponse.data.invoiceimage);
+        return WhatsappResponse.data.invoiceimage;
+        console.log("Image URL set successfully:", WhatsappResponse.data.invoiceimage);
+      } else {
+        console.error("Image URL not found in the response");
+      }
       console.log("WhatsApp response:", WhatsappResponse.data);
       localStorage.removeItem("orderData");
     } catch (error) {

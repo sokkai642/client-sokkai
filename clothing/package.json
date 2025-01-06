@@ -27,6 +27,7 @@
     "html-to-pdf": "^0.1.11",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
+    "jspdf": "^2.5.2",
     "jwt-decode": "^4.0.0",
     "lottie-react": "^2.4.0",
     "lucide-react": "^0.462.0",

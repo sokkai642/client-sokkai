@@ -26,6 +26,8 @@ const purchaseHistorySchema = new mongoose.Schema({
         type: Number,
         required: true,
       },
+      size: { type: [String], required: true },
+  color: { type: [String], required: true },
       status:{
         type: String,
     default: "pending",
@@ -48,6 +50,9 @@ const purchaseHistorySchema = new mongoose.Schema({
   addressId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "location", 
+  },
+  invoice:{
+    type:"String"
   },
   status: {
     type: String,

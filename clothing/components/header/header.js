@@ -1,17 +1,35 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-
+import './header.css'
 export default function ClientHeader() {
   const [showSearch, setShowSearch] = useState(false);
   const searchRef = useRef(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const sidebarRef = useRef(null); // Reference for the sidebar
+  const [categories, setCategories] = useState([]); // State to hold fetched categories
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
   };
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch("/api/sidebar"); // Your backend API route
+        if (!response.ok) {
+          throw new Error("Failed to fetch categories");
+        }
 
+        const data = await response.json();
+        console.log(data)
+        setCategories(data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
   useEffect(() => {
     const handleClickOutside = (event) => {
       // Close sidebar if clicked outside
@@ -35,7 +53,7 @@ export default function ClientHeader() {
         ref={sidebarRef}
         className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 z-50 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        } overflow-y-auto`}
       >
         {/* Sidebar Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
@@ -50,123 +68,75 @@ export default function ClientHeader() {
         </div>
 
         {/* Sidebar Content */}
-        <ul className="mt-4">
-          <li className="group">
-            <Link
-              href="/"
-              className="flex items-center px-6 py-3 text-gray-700 hover:text-blue-500 hover:bg-gray-100 rounded transition-all"
-            >
-              <i className="fas fa-home mr-4 text-gray-500 group-hover:text-blue-500 mr-2"></i>
-              Home
-            </Link>
-          </li>
-          <li className="group">
-            <Link
-              href="/frontend/Products/shirts"
-              className="flex items-center px-6 py-3 text-gray-700 hover:text-blue-500 hover:bg-gray-100 rounded transition-all"
-            >
-              <i className="fas fa-tshirt mr-4 text-gray-500 group-hover:text-blue-500 mr-2"></i>
-              Shirts
-            </Link>
-          </li>
-          <li className="group">
-            <Link
-              href="/frontend/Products/trousers"
-              className="flex items-center px-6 py-3 text-gray-700 hover:text-blue-500 hover:bg-gray-100 rounded transition-all"
-            >
-              <i className="fas fa-user-tie mr-4 text-gray-500 group-hover:text-blue-500 mr-2"></i>
-              Trousers
-            </Link>
-          </li>
-          <li className="group">
-            <Link
-              href="/frontend/Products/pants"
-              className="flex items-center px-6 py-3 text-gray-700 hover:text-blue-500 hover:bg-gray-100 rounded transition-all"
-            >
-              <i className="fas fa-briefcase mr-4 text-gray-500 group-hover:text-blue-500 mr-2"></i>
-              Pants
-            </Link>
-          </li>
-          <li className="group">
-            <Link
-              href="/frontend/Products/tshirts"
-              className="flex items-center px-6 py-3 text-gray-700 hover:text-blue-500 hover:bg-gray-100 rounded transition-all"
-            >
-              <i className="fas fa-tshirt mr-4 text-gray-500 group-hover:text-blue-500 mr-2"></i>
-              T Shirts
-            </Link>
-          </li>
-          <li className="group">
-            <Link
-              href="/frontend/Products/shorts"
-              className="flex items-center px-6 py-3 text-gray-700 hover:text-blue-500 hover:bg-gray-100 rounded transition-all"
-            >
-              <i className="fas fa-briefcase mr-4 text-gray-500 group-hover:text-blue-500 mr-2"></i>
-              Shorts
-            </Link>
-          </li>
-          <li className="group">
-            <Link
-              href="/frontend/Products/innerwears"
-              className="flex items-center px-6 py-3 text-gray-700 hover:text-blue-500 hover:bg-gray-100 rounded transition-all"
-            >
-              <i className="fas fa-briefcase mr-4 text-gray-500 group-hover:text-blue-500 mr-2"></i>
-              Inner wears
-            </Link>
-          </li>
-          <li className="group">
-            <Link
-              href="/frontend/Products/accessories"
-              className="flex items-center px-6 py-3 text-gray-700 hover:text-blue-500 hover:bg-gray-100 rounded transition-all"
-            >
-              <i className="fas fa-shoe-prints mr-4 text-gray-500 group-hover:text-blue-500 mr-2"></i>
-              Shoes
-            </Link>
-          </li>
-          <li className="group">
-            <Link
-              href="/frontend/Products/accessories"
-              className="flex items-center px-6 py-3 text-gray-700 hover:text-blue-500 hover:bg-gray-100 rounded transition-all"
-            >
-              <i className="fas fa-briefcase mr-4 text-gray-500 group-hover:text-blue-500 mr-2"></i>
-              Accessories
-            </Link>
-          </li>
-          <li className="group">
-            <Link
-              href="/frontend/cart"
-              className="flex items-center px-6 py-3 text-gray-700 hover:text-blue-500 hover:bg-gray-100 rounded transition-all"
-            >
-              <i className="fas fa-shopping-cart mr-4 text-gray-500 group-hover:text-blue-500 mr-2"></i>
-              Cart
-            </Link>
-          </li>
-          <li className="group">
-            <Link
-              href="/frontend/orderhistory"
-              className="flex items-center px-6 py-3 text-gray-700 hover:text-blue-500 hover:bg-gray-100 rounded transition-all"
-            >
-              <i className="fas fa-receipt mr-4 text-gray-500 group-hover:text-blue-500 mr-2"></i>
-                Order Summary
-            </Link>
-          </li>
-          <li className="group">
-            <Link
-              href="/frontend/profile"
-              className="flex items-center px-6 py-3 text-gray-700 hover:text-blue-500 hover:bg-gray-100 rounded transition-all"
-            >
-              <i className="fas fa-user-circle mr-4 text-gray-500 group-hover:text-blue-500 mr-2"></i>
-              Profile
-            </Link>
-          </li>
-        </ul>
+    {/* Sidebar Content */}
+<ul className="mt-4">
+  <li className="group">
+    <Link
+      href="/"
+      className="flex items-center px-6 py-3 text-gray-700 hover:text-blue-500 hover:bg-gray-100 rounded transition-all"
+    >
+      <i className="fas fa-home mr-4 text-gray-500 group-hover:text-blue-500 mr-2"></i>
+      Home
+    </Link>
+  </li>
 
-        {/* Footer Section */}
-        {/* <div className="absolute bottom-0 w-full px-6 py-4 border-t border-gray-200">
-          <p className="text-sm text-gray-500">
-            © 2024 <span className="font-semibold text-gray-800">SOKKAI</span>. All rights reserved.
-          </p>
-        </div> */}
+  {/* Render categories dynamically */}
+  {categories.map((category) => (
+    <li key={category._id} className="group">
+      <div className="flex items-center px-6 py-3 text-gray-700 hover:text-blue-500 hover:bg-gray-100 rounded transition-all">
+        <i className="fas fa-cogs mr-4 text-gray-500 group-hover:text-blue-500"></i>
+        {category.name}
+      </div>
+      {/* Render subcategories with increased margin and styling */}
+      {category.subcategories && category.subcategories.length > 0 && (
+        <ul className="ml-8 mt-1 border-l-2 border-gray-200 pl-4"> {/* Adjusted for hierarchy */}
+          {category.subcategories.map((subcat, index) => (
+            <li key={index} className="group relative">
+              <a
+                href={`/frontend/Products/${subcat.name.toLowerCase().replace(/\s+/g, "")}`}
+                className="flex items-center px-4 py-2 text-gray-600 hover:text-blue-500 hover:bg-gray-50 rounded transition-all"
+              >
+                <span className="absolute -left-2 w-4 h-[2px] bg-gray-200"></span>
+                <i className="fas fa-angle-right mr-3 text-sm text-gray-400 group-hover:text-blue-500"></i>
+                {subcat.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </li>
+  ))}
+
+  {/* Other Links */}
+  <li className="group">
+    <Link
+      href="/frontend/cart"
+      className="flex items-center px-6 py-3 text-gray-700 hover:text-blue-500 hover:bg-gray-100 rounded transition-all"
+    >
+      <i className="fas fa-shopping-cart mr-4 text-gray-500 group-hover:text-blue-500 mr-2"></i>
+      Cart
+    </Link>
+  </li>
+  <li className="group">
+    <Link
+      href="/frontend/orderhistory"
+      className="flex items-center px-6 py-3 text-gray-700 hover:text-blue-500 hover:bg-gray-100 rounded transition-all"
+    >
+      <i className="fas fa-receipt mr-4 text-gray-500 group-hover:text-blue-500 mr-2"></i>
+      Order Summary
+    </Link>
+  </li>
+  <li className="group">
+    <Link
+      href="/frontend/profile"
+      className="flex items-center px-6 py-3 text-gray-700 hover:text-blue-500 hover:bg-gray-100 rounded transition-all"
+    >
+      <i className="fas fa-user-circle mr-4 text-gray-500 group-hover:text-blue-500 mr-2"></i>
+      Profile
+    </Link>
+  </li>
+</ul>
+
       </div>
 
       {/* Header */}

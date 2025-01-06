@@ -1,0 +1,20 @@
+/* Styling for subcategories to create hierarchy */
+.ml-8 {
+    margin-left: 2rem; /* Indent subcategories */
+  }
+  
+  .pl-4 {
+    padding-left: 1rem; /* Add padding to the left for subcategories */
+  }
+  
+  .group .fa-angle-right {
+    transition: transform 0.3s ease;
+  }
+  
+  
+  
+  /* Optional: Adjusting the color scheme on hover for subcategories */
+  .group:hover > .fa-angle-right {
+    color: #2563eb; /* Change arrow color on hover */
+  }
+  

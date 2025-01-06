@@ -186,23 +186,24 @@ export async function POST(request) {
     const imageUrl = uploadImageResponse.secure_url;
     console.log("Image uploaded to Cloudinary:", imageUrl);
 
-    const client = twilio(
-      process.env.TWILIO_ACCOUNT_SID,
-      process.env.TWILIO_AUTH_TOKEN
-    );
-    await client.messages.create({
-      body: `Invoice for your Order`,
-      mediaUrl: imageUrl,
-      from: `whatsapp:${process.env.TWILIO_WHATSAPP_NUMBER}`,
-      to: `whatsapp:${num}`,
-    });
+    // const client = twilio(
+    //   process.env.TWILIO_ACCOUNT_SID,
+    //   process.env.TWILIO_AUTH_TOKEN
+    // );
+    // await client.messages.create({
+    //   body: `Invoice for your Order`,
+    //   mediaUrl: imageUrl,
+    //   from: `whatsapp:${process.env.TWILIO_WHATSAPP_NUMBER}`,
+    //   to: `whatsapp:${num}`,
+    // });
 
     console.log("Image sent to WhatsApp successfully.");
-
+console.log(imageUrl,"😤😤😤😤😤")
     return new Response(
       JSON.stringify({
         success: true,
         message: "Invoice sent successfully via WhatsApp.",
+        invoiceimage:imageUrl
       }),
       { status: 200, headers: { "Content-Type": "application/json" } }
     );

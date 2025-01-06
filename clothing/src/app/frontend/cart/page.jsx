@@ -23,7 +23,11 @@ import { setpath } from "@/app/utils/currentpathnavigate/path";
 export default function Cart() {
   const userId=getUserIdFromToken();
 const router=useRouter();
- 
+const [selectedSize, setSelectedSize] = useState(null);
+const[selectedcolor,setcolor]=useState(null);
+const [itemSizes, setItemSizes] = useState({});
+const [currentItem, setCurrentItem] = useState(null); 
+const [showSizeModal, setShowSizeModal] = useState(false); // Show/hide size modal
   const [selectedItems, setSelectedItems] = useState([]);
   const [showPurchaseButton, setShowPurchaseButton] = useState(true);
   const [cartdata, setcartdata] = useState([]);
@@ -87,15 +91,47 @@ const [isLoading, setIsLoading] = useState(false); // Loading state
   
 
   const handleCheckboxChange = (itemId) => {
-    setSelectedItems((prevSelected) => {
-      if (prevSelected.includes(itemId)) {
-        return prevSelected.filter((id) => id !== itemId);
-      } else {
-        return [...prevSelected, itemId];
-      }
-    });
-  };
+    const item = cartdata.find((item) => item._id === itemId);
   
+    if (!selectedItems.includes(itemId)) {
+      // When checking the box, show size modal first
+      setCurrentItem(item);
+      setShowSizeModal(true);
+    } else {
+      // When unchecking, remove both the item and its size
+      setSelectedItems(prev => prev.filter(id => id !== itemId));
+      setItemSizes(prev => {
+        const { [itemId]: removed, ...rest } = prev;
+        return rest;
+      });
+    }
+  };
+  const handleSizeSelection = (size) => {
+    if (!currentItem) return;
+    
+    setSelectedSize(size);
+  };
+  const handlecolorselection=(color)=>{
+    if (!currentItem) return;
+    setcolor(color)
+  }
+  
+  const handleConfirmSize = (size, color) => {
+    if (!currentItem) return;
+  
+    // Add both the item ID and its size
+    setSelectedItems(prev => [...prev, currentItem._id]);
+    setItemSizes(prev => ({
+      ...prev,
+      [currentItem._id]: { size, color },
+        }));
+    
+    setShowSizeModal(false);
+    setCurrentItem(null);
+    setSelectedSize(null);
+    setcolor(null);
+    
+  };
   
 
 
@@ -192,37 +228,43 @@ const [isLoading, setIsLoading] = useState(false); // Loading state
           }
           break;
           case 'PURCHASENOW':
-            
-           
-            console.log("Selected products:", selectedItems);
-            const selectedCartData = cartdata.filter(item => selectedItems.includes(item._id)); 
-            
-            console.log("Selected Cart Data:", selectedCartData); // Logs the filtered cart data (full product details)
-            if(selectedCartData.length<1){
-              toast.info("Please select an item to proceed.");
+            const selectedCartData = cartdata
+              .filter(item => selectedItems.includes(item._id))
+              .map(item => ({
+                ...item,
+                selectedSize: itemSizes[item._id]
+              }));
+          
+            if (selectedCartData.length === 0) {
+              toast.info("Please select items to purchase");
               return;
             }
-           setTimeout(()=>{
-            setIsLoading(true); 
-           },[2000])
+          
+            // Verify all selected items have sizes
+            const itemsWithoutSize = selectedCartData.filter(item => !item.selectedSize);
+            if (itemsWithoutSize.length > 0) {
+              toast.error("Please select sizes for all items");
+              return;
+            }
+          console.log(selectedCartData,"😒😒😒😒😒😒😒😒😒😒😒😒😒")
+            setIsLoading(true);
+            
             setOrderData({
-              items: selectedCartData,  
-              total: calculateDiscountedTotal(), 
+              items: selectedCartData,
+              total: calculateDiscountedTotal(),
               savings: savings,
               ...(isCouponApplied && {
-                couponId: coupunId,       
-                couponPrice: couponDiscount  
+                couponId: coupunId,
+                couponPrice: couponDiscount
               })
             });
-
           
-            
-              setIsLoading(false); // Stop loader
-            
-            router.push('/frontend/ordersummary');
+            setTimeout(() => {
+              setIsLoading(false);
+              router.push('/frontend/ordersummary');
+            }, 1000);
             break;
-           
-        
+          
 
           
       }
@@ -615,6 +657,58 @@ const [isLoading, setIsLoading] = useState(false); // Loading state
           PURCHASE
         </button>
       </div>
+      {showSizeModal && currentItem && (
+  <div className="modal-backdrop">
+    <div className="modal-content">
+      <h2>Select Size for {currentItem.name}</h2>
+
+      <div className="size-options">
+        {JSON.parse(currentItem.sizes[0]).map((size) => (
+          <button
+            key={size}
+            onClick={() => handleSizeSelection(size)}
+            className={`size-option ${selectedSize === size ? 'selected' : ''}`}
+          >
+            {size}
+          </button>
+        ))}
+      </div>
+
+      <h2>Select Color for {currentItem.name}</h2>
+      <div className="color-options">
+        {currentItem.color[0].split(',').map((color) => (
+          <button
+            key={color}
+            onClick={() => handlecolorselection(color)}
+            className={`size-option  ${selectedcolor === color ? 'selected' : ''}`}
+          >
+            {color}
+          </button>
+        ))}
+      </div>
+
+      <div className="modal-actions">
+        {selectedSize && selectedcolor && (
+          <button
+            onClick={() => handleConfirmSize(selectedSize, selectedcolor)}
+            className="confirm-button"
+          >
+            Confirm
+          </button>
+        )}
+        <button
+          onClick={() => setShowSizeModal(false)}
+          className="cancel-button"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
+
+
       
       <ToastContainer />
 

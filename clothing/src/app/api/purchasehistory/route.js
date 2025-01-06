@@ -8,9 +8,9 @@ export async function POST(request) {
   try {
     await connectMongoDB();
 
-    const { userId, products, totalAmount, timestamp, addressId,couponDiscount } = await request.json();
+    const { userId, products, totalAmount, timestamp, addressId,couponDiscount,imageUrl } = await request.json();
     console.log(addressId);
-    
+    console.log("😍😍",imageUrl)
     const user = await User.findById(userId);
 
     if (!user) {
@@ -35,11 +35,13 @@ export async function POST(request) {
       user.purchaseHistory = [];
     }
 
-  
+  console.log("😡😡😡😡😡😡😡😡😡😡😡",products[0].size.size[0]);
     const purchaseItems = products.map((product) => ({
       productId: product.productId,
       quantity: product.quantity,
       totalPrice: product.totalPrice,
+      size:product.size.size||"unknown",
+      color:product.size.color||"unknown"
     }));
     let amount;
 
@@ -48,6 +50,7 @@ export async function POST(request) {
       totalAmount,
       timestamp,
       addressId,
+      invoice:imageUrl
     });
 
     await user.save();

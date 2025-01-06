@@ -7,8 +7,8 @@ import LoaderComponent from '../../../../../components/loader1/loader';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getUserIdFromToken } from '../../../utils/token/token'; 
-
-const ProductCard = ({ images, name, price, productId, onRemove, customer, setProducts, userId }) => {
+import styles from '../product.module.css'
+const ProductCard = ({ images, name, price, productId, onRemove, customer, setProducts, userId,gift }) => {
   const handleAddWishlist = async(id) => {
     const userId = getUserIdFromToken();
     if (userId) {
@@ -58,6 +58,11 @@ const ProductCard = ({ images, name, price, productId, onRemove, customer, setPr
       )}
       <div className="relative w-full h-[400px] mb-4">
         <Link href={`/frontend/productdetails/${productId}`} passHref>
+        {gift && (
+          <div className={styles.giftTag}>
+            <span className={styles.giftText}>Gift Available</span>
+          </div>
+        )}
           <img
             src={images[0]?.url}
             alt={name}
@@ -172,6 +177,7 @@ const ProductsPage = ({ params }) => {
               onRemove={handleRemoveFromWishlist}
               customer={customer}
               setProducts={setProducts}  
+              gift={product.selectedGift}
             />
           ))
         ) : (

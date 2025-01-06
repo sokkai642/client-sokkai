@@ -118,7 +118,7 @@ const ProductsPage = ({ params }) => {
     try {
       switch (action) {
         case 'ORDER':
-          const cartResponse = await axios.post("/api/cart", { userId, productId: id });
+          const cartResponse = await axios.post("/api/cart", { userId, productId: id});
           if (cartResponse.status === 200) {
             toast.success("Processing your order...");
             setTimeout(() => router.push("/frontend/cart"), 2000);
@@ -137,6 +137,8 @@ const ProductsPage = ({ params }) => {
           if (addToCartResponse.status === 200) {
             toast.success("Added to cart");
           }
+          console.log(setSelectedSize,"size sleected")
+
           break;
       }
     } catch (error) {

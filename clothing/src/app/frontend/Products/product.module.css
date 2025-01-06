@@ -179,3 +179,38 @@
     }
   }
   
+/* Styling for the "Gift Available" tag */
+.giftTag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #4caf50; /* Green background for gift */
+  padding: 6px 12px;
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
+  z-index: 2; /* Ensure the tag appears on top of the image */
+  font-size: 12px; /* Small font size */
+  font-weight: 600; /* Semi-bold text */
+  color: white; /* White text */
+  letter-spacing: 0.5px; /* Small spacing for readability */
+  font-family: 'Arial', sans-serif; /* Clean sans-serif font */
+}
+
+/* Styling for the text inside the gift tag */
+.giftText {
+  display: inline-block;
+  text-transform: uppercase; /* Make the text capitalized */
+}
+
+/* Item Wrapper positioning */
+.itemWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+
+.itemImage:hover {
+  transform: scale(1.05); /* Slight zoom-in effect on hover */
+}
+
+

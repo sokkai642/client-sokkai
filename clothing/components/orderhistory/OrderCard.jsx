@@ -2,7 +2,7 @@ import { Package, Truck, CheckCircle, Clock, ArrowRight, MapPin, Calendar, Star 
 import { useState, useEffect } from 'react';
 import { useRouter } from "next/navigation";
 import axios from 'axios';
-
+import { jsPDF } from "jspdf"; // If using npm, import jsPDF
 const statusConfig = {
   'delivered': { 
     icon: CheckCircle, 
@@ -20,9 +20,9 @@ const statusConfig = {
   },
   'dispatched': { 
     icon: Clock, 
-    color: 'text-green-600', // Change this to green
-    bgColor: 'bg-green-600', // Change this to green
-    lightBg: 'bg-green-50', // Change this to green light background
+    color: 'text-green-600',
+    bgColor: 'bg-green-600',
+    lightBg: 'bg-green-50',
     label: 'Processing'
   },
   'cancelled': { 
@@ -33,7 +33,6 @@ const statusConfig = {
     label: 'Cancelled'
   }
 };
-
 
 const OrderCard = ({ order, userId }) => {
   const [currentOrder, setCurrentOrder] = useState(order);
@@ -84,14 +83,33 @@ const OrderCard = ({ order, userId }) => {
       console.error('Error canceling product:', error);
     }
   };
+  const handleDownloadInvoice = () => {
+    // Check if invoice URL exists
+    if (currentOrder.invoice) {
+        const pdf = new jsPDF();
+        
+        // Create an image element
+        const img = new Image();
+        img.src = currentOrder.invoice;
+        
+        img.onload = () => {
+            // Add the image to the PDF (x, y, width, height)
+            pdf.addImage(img, 'PNG', 10, 10, 180, 160); // Adjust position and size as needed
+            pdf.save(`invoice-${currentOrder._id}.pdf`); // Save the PDF with the order ID as file name
+            console.log("Downloading invoice as PDF for order:", currentOrder._id);
+        };
+    } else {
+        console.log("No invoice available for order:", currentOrder._id);
+    }
+};
 
-  // Open the confirmation modal when the cancel button is clicked
+
+
   const openModal = (productId) => {
     setProductToCancel(productId);
     setShowModal(true);
   };
 
-  // Close the modal
   const closeModal = () => {
     setShowModal(false);
     setProductToCancel(null);
@@ -117,7 +135,17 @@ const OrderCard = ({ order, userId }) => {
           </div>
         </div>
 
-        <div className="text-right sm:text-left mt-2 sm:mt-0">
+        <div className="text-right sm:text-left mt-2 sm:mt-0 flex items-center space-x-4">
+          {/* Download Invoice Button */}
+          <button
+            onClick={handleDownloadInvoice}
+            className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 focus:outline-none"
+          >
+            <ArrowRight className="w-4 h-4" />
+            <span className="text-sm font-medium">Download Invoice</span>
+          </button>
+          
+          {/* Total Items */}
           <p className="text-xs text-gray-500">{currentOrder.products.length} item(s)</p>
         </div>
       </div>
@@ -138,7 +166,7 @@ const OrderCard = ({ order, userId }) => {
               
               <div className="relative flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20">
                 <img 
-                  src={images?.[0]?.url || '/default-image.jpg'}ooo
+                  src={images?.[0]?.url || '/default-image.jpg'}
                   alt={name || 'Product Image'} 
                   className="w-full h-full object-cover rounded-lg border-2 border-gray-200 shadow-md"
                 />
@@ -226,4 +254,3 @@ const OrderCard = ({ order, userId }) => {
 };
 
 export default OrderCard;
-
