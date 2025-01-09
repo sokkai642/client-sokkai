@@ -28,6 +28,7 @@ export async function POST(request) {
         JSON.stringify({ error: "Missing required fields: email" }),
         { status: 400 }
       );
+      
     }
 
     let user = await User.findOne({ email });
