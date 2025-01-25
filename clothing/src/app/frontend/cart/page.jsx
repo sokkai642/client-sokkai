@@ -94,11 +94,9 @@ const [isLoading, setIsLoading] = useState(false); // Loading state
     const item = cartdata.find((item) => item._id === itemId);
   
     if (!selectedItems.includes(itemId)) {
-      // When checking the box, show size modal first
       setCurrentItem(item);
       setShowSizeModal(true);
     } else {
-      // When unchecking, remove both the item and its size
       setSelectedItems(prev => prev.filter(id => id !== itemId));
       setItemSizes(prev => {
         const { [itemId]: removed, ...rest } = prev;
@@ -119,7 +117,6 @@ const [isLoading, setIsLoading] = useState(false); // Loading state
   const handleConfirmSize = (size, color) => {
     if (!currentItem) return;
   
-    // Add both the item ID and its size
     setSelectedItems(prev => [...prev, currentItem._id]);
     setItemSizes(prev => ({
       ...prev,

@@ -36,7 +36,7 @@ const HomePage = () => {
     {
       name: "Shirts",
       image: "https://assets.digitalcontent.marksandspencer.app/image/upload/w_600,h_780,q_auto,f_auto,e_sharpen/SD_03_T11_2081_E0_X_EC_0",
-      navigate:"Shirts"
+      navigate:"all"
     },
     {
       name: "T Shirts",
@@ -74,9 +74,9 @@ const HomePage = () => {
     const fetchCategories = async () => {
       try {
         const response = await fetch("/api/sidebar"); // Your backend API route
-        if (!response.ok) {
-          throw new Error("Failed to fetch categories");
-        }
+        // if (!response.ok) {
+        //   throw new Error("Failed to fetch categories");
+        // }
 
         const data = await response.json();
         console.log(data)
@@ -118,7 +118,7 @@ const HomePage = () => {
         console.log(fetchedProducts);
 
         setProducts(fetchedProducts);
-        setFilteredProducts(filtered);
+        // setFilteredProducts(filtered);
       } catch (error) {
         console.error("Error fetching products:", error);
       }finally {
@@ -229,8 +229,7 @@ const handleshopnow=()=>{
           </button>
         </div>
 
-        {/* Sidebar Content */}
-    {/* Sidebar Content */}
+       
 <ul className="mt-4">
   <li className="group">
     <Link
@@ -242,18 +241,16 @@ const handleshopnow=()=>{
     </Link>
   </li>
 
-  {/* Render categories dynamically */}
   {categoriessidebar.map((category) => (
     <li key={category._id} className="group">
       <div className="flex items-center px-6 py-3 text-gray-700 hover:text-blue-500 hover:bg-gray-100 rounded transition-all">
         <i className="fas fa-cogs mr-4 text-gray-500 group-hover:text-blue-500"></i>
         {category.name}
       </div>
-      {/* Render subcategories with increased margin and styling */}
       {category.subcategories && category.subcategories.length > 0 && (
         <ul className="ml-8 mt-1 border-l-2 border-gray-200 pl-4"> {/* Adjusted for hierarchy */}
           {category.subcategories.map((subcat, index) => (
-            <li key={index} className="group relative">
+            <li key={subcat._id} className="group relative">
               <a
                 href={`/frontend/Products/${subcat.name.toLowerCase().replace(/\s+/g, "")}`}
                 className="flex items-center px-4 py-2 text-gray-600 hover:text-blue-500 hover:bg-gray-50 rounded transition-all"
@@ -269,7 +266,6 @@ const handleshopnow=()=>{
     </li>
   ))}
 
-  {/* Other Links */}
   <li className="group">
     <Link
       href="/frontend/cart"
@@ -441,7 +437,7 @@ const handleshopnow=()=>{
         <div className="flex gap-4 sm:gap-6 lg:gap-8 px-4 py-4 min-w-max">
           {categories.map((category, index) => (
             <div 
-              key={index}
+              key={category._id}
               className="group flex flex-col items-center space-y-4 cursor-pointer"
             >
               <Link href={`/frontend/Products/${category.navigate}`} passHref>
@@ -485,7 +481,6 @@ const handleshopnow=()=>{
 
       <section className="relative flex flex-col lg:flex-row justify-between items-center my-8 max-w-screen-lg mx-auto h-[100px] lg:h-[120px] text-center bg-[#f8f9fa] overflow-hidden">
   <div className="flex w-full items-center justify-between relative">
-    {/* Text Section */}
     <div className="text-xl lg:text-2xl font-bold text-[#333] z-10 px-4 text-left max-w-full lg:max-w-[50%] relative lg:left-0 lg:top-0 lg:transform-none lg:translate-y-0 sm:hidden">
       FLAT 40% OFF ON SHIRTS
     </div>
@@ -501,7 +496,7 @@ const handleshopnow=()=>{
       <div className="relative overflow-hidden w-full h-full">
         {imagePairs.map((image, index) => (
           <img
-            key={index}
+            key={image}
             src={image}
             alt={`Image ${currentPair}-${index}`}
             className={`w-full h-full object-cover transition-opacity duration-500 ${index === currentPair ? "opacity-100" : "opacity-0 absolute"}`}
@@ -531,9 +526,7 @@ const handleshopnow=()=>{
             </Link>
           </div>
           <div className={styles.trendingItemsWrapper}>
-            {products.
-            filter((product)=>product.category==="shirts")
-            .map((product) => (
+            {products            .map((product) => (
               <div className={styles.itemWrapper} key={product.id}>
                  {product.selectedGift && (
           <div className={styles.giftTag}>
@@ -559,28 +552,26 @@ const handleshopnow=()=>{
           </div>
         </section>
         <section className={`${styles.accessoriesSection} flex flex-wrap items-center p-4 border shadow-md relative h-auto lg:h-[500px]`}>
-  {/* Left Arrow */}
   <button
     onClick={prevImage1}
     className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-900 text-4xl bg-gray-200 p-2 rounded-full transition-all duration-300"
     aria-label="Previous Image"
   >
-    &#10094; {/* Left arrow symbol */}
+    &#10094; 
   </button>
 
-  {/* Image Section */}
   <div className="w-full lg:w-1/2 flex justify-center lg:justify-start relative h-full">
     {gifts.length > 0 && gifts[currentImageIndex]?.photos?.[0]?.url ? (
       <Image
-        src={gifts[currentImageIndex].photos[0].url} // Access the URL inside the photos array
+        src={gifts[currentImageIndex].photos[0].url} 
         alt={gifts[currentImageIndex].name || "Gift Image"}
-        className="rounded-lg object-contain" // Ensures the entire image is visible
+        className="rounded-lg object-contain" 
         style={{
-          width: "700px", // Fixed width
-          height: "500px", // Fixed height
+          width: "700px",
+          height: "500px", 
         }}
-        width={700} // Fixed width for Next.js Image optimization
-        height={500} // Fixed height for Next.js Image optimization
+        width={700} 
+        height={500} 
       />
     ) : (
       <p className="text-gray-500">No image available</p>
@@ -653,13 +644,13 @@ const handleshopnow=()=>{
       <Image
         src={gifts[currentImageIndex].photos[0].url} // Access the URL inside the photos array
         alt={gifts[currentImageIndex].name || "Gift Image"}
-        className="rounded-lg object-contain" // Ensures the entire image is visible
+        className="rounded-lg object-contain" 
         style={{
-          width: "700px", // Fixed width
-          height: "300px", // Fixed height
+          width: "700px", 
+          height: "300px", 
         }}
-        width={700} // Fixed width for Next.js Image optimization
-        height={500} // Fixed height for Next.js Image optimization
+        width={700}
+        height={500} 
       />
     ) : (
       <p className="text-gray-500">No image available</p>
@@ -672,10 +663,9 @@ const handleshopnow=()=>{
     className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-900 text-4xl bg-gray-200 p-2 rounded-full transition-all duration-300"
     aria-label="Next Image"
   >
-    &#10095; {/* Right arrow symbol */}
+    &#10095; 
   </button>
 
-  {/* Text Section */}
   <div className="w-full text-center mt-4 p-4 bg-indigo-100 rounded-lg border-l-4 border-indigo-500">
     <h4 className="text font-semibold uppercase mb-2 text-indigo-700">
     {gifts[currentImageIndex]?.name || "Gift Name"}
@@ -717,7 +707,6 @@ const handleshopnow=()=>{
   <div className={styles.arrivalsItems}>
     {products.map((product) => (
       <div className={styles.itemWrapper} key={product.id}>
-        {/* Conditional rendering for the "Gift Available" tag */}
         {product.selectedGift && (
           <div className={styles.giftTag}>
             <span className={styles.giftText}>Gift Available</span>

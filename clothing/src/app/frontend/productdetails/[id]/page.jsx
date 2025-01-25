@@ -72,7 +72,6 @@ const ProductsPage = ({ params }) => {
       });
   
       if (response.status === 200) {
-        // Update reviews locally after successful submission
         setReviews([...reviews, {
           username: newReview.username,
           ratings: newReview.rating,

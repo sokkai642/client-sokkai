@@ -16,7 +16,6 @@ console.log(product)
 
  
 
-    // Returning the 200 response with the product data
     return NextResponse.json(product, { status: 200 });
 
   } catch (error) {
