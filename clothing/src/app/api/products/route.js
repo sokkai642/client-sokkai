@@ -101,9 +101,9 @@ export async function PUT(req) {
       );
     }
 
-    const existingReview = product.reviews.find(
-      (r) => r.username === review.username
-    );
+    // const existingReview = product.reviews.find(
+    //   (r) => r.username === review.username
+    // );
 
     // if (existingReview) {
     //   return new Response(
