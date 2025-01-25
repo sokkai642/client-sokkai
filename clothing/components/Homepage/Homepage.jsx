@@ -485,7 +485,6 @@ const handleshopnow=()=>{
 
       <section className="relative flex flex-col lg:flex-row justify-between items-center my-8 max-w-screen-lg mx-auto h-[100px] lg:h-[120px] text-center bg-[#f8f9fa] overflow-hidden">
   <div className="flex w-full items-center justify-between relative">
-    {/* Text Section */}
     <div className="text-xl lg:text-2xl font-bold text-[#333] z-10 px-4 text-left max-w-full lg:max-w-[50%] relative lg:left-0 lg:top-0 lg:transform-none lg:translate-y-0 sm:hidden">
       FLAT 40% OFF ON SHIRTS
     </div>
@@ -531,9 +530,7 @@ const handleshopnow=()=>{
             </Link>
           </div>
           <div className={styles.trendingItemsWrapper}>
-            {products.
-            filter((product)=>product.category==="shirts")
-            .map((product) => (
+            {products            .map((product) => (
               <div className={styles.itemWrapper} key={product.id}>
                  {product.selectedGift && (
           <div className={styles.giftTag}>
@@ -559,28 +556,26 @@ const handleshopnow=()=>{
           </div>
         </section>
         <section className={`${styles.accessoriesSection} flex flex-wrap items-center p-4 border shadow-md relative h-auto lg:h-[500px]`}>
-  {/* Left Arrow */}
   <button
     onClick={prevImage1}
     className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-900 text-4xl bg-gray-200 p-2 rounded-full transition-all duration-300"
     aria-label="Previous Image"
   >
-    &#10094; {/* Left arrow symbol */}
+    &#10094; 
   </button>
 
-  {/* Image Section */}
   <div className="w-full lg:w-1/2 flex justify-center lg:justify-start relative h-full">
     {gifts.length > 0 && gifts[currentImageIndex]?.photos?.[0]?.url ? (
       <Image
-        src={gifts[currentImageIndex].photos[0].url} // Access the URL inside the photos array
+        src={gifts[currentImageIndex].photos[0].url} 
         alt={gifts[currentImageIndex].name || "Gift Image"}
-        className="rounded-lg object-contain" // Ensures the entire image is visible
+        className="rounded-lg object-contain" 
         style={{
-          width: "700px", // Fixed width
-          height: "500px", // Fixed height
+          width: "700px",
+          height: "500px", 
         }}
-        width={700} // Fixed width for Next.js Image optimization
-        height={500} // Fixed height for Next.js Image optimization
+        width={700} 
+        height={500} 
       />
     ) : (
       <p className="text-gray-500">No image available</p>
@@ -653,13 +648,13 @@ const handleshopnow=()=>{
       <Image
         src={gifts[currentImageIndex].photos[0].url} // Access the URL inside the photos array
         alt={gifts[currentImageIndex].name || "Gift Image"}
-        className="rounded-lg object-contain" // Ensures the entire image is visible
+        className="rounded-lg object-contain" 
         style={{
-          width: "700px", // Fixed width
-          height: "300px", // Fixed height
+          width: "700px", 
+          height: "300px", 
         }}
-        width={700} // Fixed width for Next.js Image optimization
-        height={500} // Fixed height for Next.js Image optimization
+        width={700}
+        height={500} 
       />
     ) : (
       <p className="text-gray-500">No image available</p>
@@ -672,10 +667,9 @@ const handleshopnow=()=>{
     className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-900 text-4xl bg-gray-200 p-2 rounded-full transition-all duration-300"
     aria-label="Next Image"
   >
-    &#10095; {/* Right arrow symbol */}
+    &#10095; 
   </button>
 
-  {/* Text Section */}
   <div className="w-full text-center mt-4 p-4 bg-indigo-100 rounded-lg border-l-4 border-indigo-500">
     <h4 className="text font-semibold uppercase mb-2 text-indigo-700">
     {gifts[currentImageIndex]?.name || "Gift Name"}
@@ -717,7 +711,6 @@ const handleshopnow=()=>{
   <div className={styles.arrivalsItems}>
     {products.map((product) => (
       <div className={styles.itemWrapper} key={product.id}>
-        {/* Conditional rendering for the "Gift Available" tag */}
         {product.selectedGift && (
           <div className={styles.giftTag}>
             <span className={styles.giftText}>Gift Available</span>
