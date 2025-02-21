@@ -113,21 +113,28 @@ const HomePage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        const cachedProducts = localStorage.getItem("products");
+        if (cachedProducts) {
+          setProducts(JSON.parse(cachedProducts)); // Load from localStorage first
+          setLoading(false); 
+        }
+  
         const response = await axios.get("/api/products");
         const fetchedProducts = response.data;
         console.log(fetchedProducts);
-
+  
         setProducts(fetchedProducts);
-        // setFilteredProducts(filtered);
+        localStorage.setItem("products", JSON.stringify(fetchedProducts)); // Update cache
       } catch (error) {
         console.error("Error fetching products:", error);
-      }finally {
-        setLoading(false); // Stop loader after fetching
+      } finally {
+        setLoading(false);
       }
     };
-
+  
     fetchProducts();
   }, []);
+  
   const handlefullproductnavigate=(productId)=>{
     console.log(productId)
     router.push(`/frontend/productdetails/${productId}`)

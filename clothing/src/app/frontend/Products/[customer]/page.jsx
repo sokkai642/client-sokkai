@@ -9,18 +9,26 @@ import 'react-toastify/dist/ReactToastify.css';
 import { getUserIdFromToken } from '../../../utils/token/token'; 
 import styles from '../product.module.css'
 const ProductCard = ({ images, name, price, productId, onRemove, customer, setProducts, userId,gift }) => {
-  const handleAddWishlist = async(id) => {
+  const handleAddWishlist = async (id) => {
     const userId = getUserIdFromToken();
-    if (userId) {
+    if (!userId) {
+      toast.error("Please login to add items to wishlist");
+      window.location.href = "/frontend/login"; // Redirect to login
+      return;
+    }
+  
+    try {
       const wishlistResponse = await axios.post("/api/wishlist", { userId, productId: id });
       if (wishlistResponse.status === 200) {
         toast.success("Added to wishlist");
       }
       console.log("Product added to wishlist:", id);
-    } else {
-      console.error("No token found");
+    } catch (error) {
+      console.error("Error adding to wishlist:", error);
+      toast.error("Failed to add to wishlist");
     }
   };
+  
 
   const remove = async (id) => {
     try {
@@ -99,49 +107,44 @@ const ProductsPage = ({ params }) => {
   const { customer } = unwrappedParams || {};
 
   useEffect(() => {
-    const userId = getUserIdFromToken(); 
-    if (userId) {
-      const fetchProducts = async () => {
-        try {
-          let response;
-          setLoading(true);
-          
-          if (customer === "wishlist") {
-            console.log("Fetching wishlist");
-            response = await axios.get("/api/wishlist", {
-              params: { userId },
-            });
-            console.log("Wishlist products:", response.data);
-            
-            // Directly set wishlist products (no filtering by category)
-            setProducts(response.data);
-          } else {
-            response = await axios.get("/api/products");
-            console.log("All products:", response.data);
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        let response;
   
-            const fetchedProducts = response.data;
-  
-            if (customer && customer !== 'all') {
-              // Filter products by category if not wishlist
-              const filteredProducts = fetchedProducts.filter(product => product.category === customer);
-              setProducts(filteredProducts);
-            } else {
-              setProducts(fetchedProducts); 
-            }
+        if (customer === "wishlist") {
+          const userId = getUserIdFromToken(); 
+          if (!userId) {
+            toast.error("Please login to view your wishlist");
+            window.location.href = "/frontend/login"; // Redirect to login
+            return;
           }
-        } catch (error) {
-          console.error("Error fetching products:", error);
-        } finally {
-          setTimeout(() => {
-            setLoading(false);
-          }, 1500);
-        }
-      };
   
-      fetchProducts();
-    } else {
-      console.error("No token found");
-    }
+          console.log("Fetching wishlist");
+          response = await axios.get("/api/wishlist", { params: { userId } });
+          console.log("Wishlist products:", response.data);
+          setProducts(response.data);
+        } else {
+          response = await axios.get("/api/products");
+          console.log("All products:", response.data);
+  
+          const fetchedProducts = response.data;
+          if (customer && customer !== 'all') {
+            setProducts(fetchedProducts.filter(product => product.category === customer));
+          } else {
+            setProducts(fetchedProducts);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      } finally {
+        setTimeout(() => {
+          setLoading(false);
+        }, 1500);
+      }
+    };
+  
+    fetchProducts();
   }, [customer]);
   
 
