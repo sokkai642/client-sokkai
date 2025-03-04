@@ -15,10 +15,11 @@ export default function ClientHeader() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch("/api/sidebar"); // Your backend API route
+        const response = await fetch("/api/sidebar");
         if (!response.ok) {
           throw new Error("Failed to fetch categories");
         }
+
 
         const data = await response.json();
         console.log(data)
@@ -67,8 +68,6 @@ export default function ClientHeader() {
           </button>
         </div>
 
-        {/* Sidebar Content */}
-    {/* Sidebar Content */}
 <ul className="mt-4">
   <li className="group">
     <Link
@@ -153,7 +152,9 @@ export default function ClientHeader() {
         {/* Logo */}
         <h1
           style={{ marginLeft: "1rem" }}
-          className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold flex-1`}
+          className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold flex-1 cursor-pointer`}
+          onClick={() => (window.location.href = "/")}
+
         >
           <span className="text-black">SO</span>
           <span className="text-blue-500">K</span>
@@ -161,20 +162,7 @@ export default function ClientHeader() {
           <span className="text-yellow-500">I</span>
         </h1>
 
-        <div className="flex-grow flex justify-end items-center space-x-4 relative">
-  <div className="relative w-2/3">
-    {/* Search Icon inside input on Left */}
-  
-
-    {/* Search Input */}
-    <input
-      type="text"
-      placeholder="Search for products..."
-      className="bg-gray-100 text-sm sm:text-base lg:text-lg px-4 py-2 pl-16 pr-4 rounded-full w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-      aria-label="Search input"
-    />
-  </div>
-</div>
+        
 
 
 
